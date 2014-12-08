@@ -16,6 +16,7 @@
 .set swlock_try_acquire.locnochandec, 1
 .set swlock_try_acquire.nstackwords, 0
 swlock_try_acquire:
+    ENTSP_lu6 0
     get r11, id
     add r11, r11, 1
     ldw r1, r0[0]            // Get the current mutex value.
@@ -33,5 +34,3 @@ swlock_try_acquire:
 .set swlock_try_acquire.maxchanends, 0
 .set swlock_try_acquire.maxtimers, 0
 .set swlock_try_acquire.maxthreads, 1
-          .core     "XS1"
-          .corerev  "REVB"
