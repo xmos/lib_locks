@@ -3,6 +3,9 @@
 // University of Illinois/NCSA Open Source License posted in
 // LICENSE.txt and at <http://github.xcore.com/>
 
+#ifndef __hwlock_h_
+#define __hwlock_h_
+
 #ifndef XS1_RES_TYPE_LOCK
 #define XS1_RES_TYPE_LOCK 5
 #endif
@@ -80,3 +83,4 @@ inline void hwlock_release(hwlock_t lock)
                         : "memory");
 }
 
+#endif // __hwlock_h_

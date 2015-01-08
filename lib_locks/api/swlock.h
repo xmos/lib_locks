@@ -66,4 +66,4 @@ void swlock_acquire(REFERENCE_PARAM(swlock_t, lock));
  */
 void swlock_release(REFERENCE_PARAM(swlock_t, lock));
 
-#endif
+#endif // __swlock_h_
