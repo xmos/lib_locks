@@ -1,29 +1,4 @@
-Lock handling Library
-=====================
-.. rheader::
-
-   Locks |version|
-
-Lock handling library
----------------------
-
-This library provides access to hardware and software locks for use in
-concurrent C programs. In general it is not safe to use these to
-marshall within XC due to the assumptions XC
-makes about safe concurrent data access.
-
-Two types of locks are provided. Hardware locks are fast and power
-efficient but there are a limited number per tile. Software locks are
-slower but you can use an unlimited number of them.
-
-Software version and dependencies
-.................................
-
-This document pertains to version |version| of the locks library. It is
-intended to be used with version 13.x of the xTIMEcomposer studio tools.
-
-The library does not have any dependencies (i.e. it does not rely on any
-other libraries).
+.. include:: ../../../README.rst
 
 Hardware lock API
 -----------------
@@ -32,6 +7,9 @@ Hardware lock API
 
 .. doxygenfunction:: hwlock_alloc
 .. doxygenfunction:: hwlock_free
+
+|newpage|
+
 .. doxygenfunction:: hwlock_acquire
 .. doxygenfunction:: hwlock_release
 
