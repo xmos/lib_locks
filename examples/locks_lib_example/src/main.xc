@@ -1,3 +1,4 @@
+// Copyright (c) 2015, XMOS Ltd, All rights reserved
 
 // These functions are implemented in use_locks.c
 void init_locks(void);

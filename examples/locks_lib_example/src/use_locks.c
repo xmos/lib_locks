@@ -1,3 +1,4 @@
+// Copyright (c) 2015, XMOS Ltd, All rights reserved
 #include "hwlock.h"
 #include "swlock.h"
 #include <stdio.h>

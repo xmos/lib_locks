@@ -1,3 +1,4 @@
+// Copyright (c) 2015, XMOS Ltd, All rights reserved
 #include "hwlock.h"
 
 extern inline hwlock_t hwlock_alloc(void);
