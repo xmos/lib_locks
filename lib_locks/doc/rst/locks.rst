@@ -24,3 +24,12 @@ Software lock API
 .. doxygenfunction:: swlock_try_acquire
 .. doxygenfunction:: swlock_acquire
 .. doxygenfunction:: swlock_release
+
+|appendix|
+
+Known Issues
+------------
+
+No known issues.
+
+.. include:: ../../../CHANGELOG.rst
