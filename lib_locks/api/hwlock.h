@@ -3,9 +3,7 @@
 #ifndef __hwlock_h_
 #define __hwlock_h_
 
-#ifndef XS1_RES_TYPE_LOCK
-#define XS1_RES_TYPE_LOCK 5
-#endif
+#include <xs1.h>
 
 #define QUOTEAUX(x) #x
 #define QUOTE(x) QUOTEAUX(x)
