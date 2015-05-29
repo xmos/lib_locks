@@ -9,5 +9,5 @@
 #
 # You can also set MODULE_XCC_C_FLAGS, MODULE_XCC_XC_FLAGS etc..
 
-VERSION = 2.0.0
+VERSION = 2.0.1
 
