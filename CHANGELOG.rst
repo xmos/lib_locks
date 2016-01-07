@@ -1,6 +1,11 @@
 Locks library change log
 ========================
 
+2.0.2
+-----
+
+  * Update to source code license and copyright
+
 2.0.1
 -----
 
