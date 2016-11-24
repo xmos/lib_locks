@@ -25,12 +25,13 @@ void release_lock();
 #define NUM_THREADS 8
 #define NUM_ATTEMPTS 10
 
-void use_lock(int high_priority, hwlock_t lock,
+void use_lock(unsigned high_priority_limit, hwlock_t lock,
   int acquire_time[NUM_ATTEMPTS], int release_time[NUM_ATTEMPTS])
 {
   timer tmr;
 
-  if (high_priority) {
+  unsigned core_id = get_logical_core_id();
+  if (core_id < high_priority_limit) {
     set_core_high_priority_on();
   }
 
@@ -55,9 +56,8 @@ int check_none_in_range(int thread_num, int start_time, int end_time,
     for (unsigned j = 0; j < NUM_ATTEMPTS; j++) {
       if (acquire_time[i][j] > start_time && acquire_time[i][j] < end_time) {
         errors += 1;
-
-        debug_printf("Core %d acquired lock at %d when core %d had lock from %d -> %d\n",
-          i, acquire_time[i][j], thread_num, start_time, end_time);
+        // debug_printf("Core %d acquired lock at %d when core %d had lock from %d -> %d\n",
+        //   i, acquire_time[i][j], thread_num, start_time, end_time);
       }
     }
   }
@@ -86,21 +86,23 @@ int main() {
       // The software lock is kept in helper.c to get around parallel usage checks
       hwlock_t lock = hwlock_alloc();
 
-      par {
-        use_lock(1, lock, acquire_time[0], release_time[0]);
-        use_lock(1, lock, acquire_time[1], release_time[1]);
-        use_lock(1, lock, acquire_time[2], release_time[2]);
-        use_lock(1, lock, acquire_time[3], release_time[3]);
-        use_lock(0, lock, acquire_time[4], release_time[4]);
-        use_lock(0, lock, acquire_time[5], release_time[5]);
-        use_lock(0, lock, acquire_time[6], release_time[6]);
-        use_lock(0, lock, acquire_time[7], release_time[7]);
-      }
-      int errors = check_data(acquire_time, release_time);
-      if (errors) {
-        debug_printf("ERRORS detected\n");
-      } else {
-        debug_printf("All ran ok\n");
+      for (int i = 0; i <= NUM_THREADS; i++) {
+        par {
+          use_lock(i, lock, acquire_time[0], release_time[0]);
+          use_lock(i, lock, acquire_time[1], release_time[1]);
+          use_lock(i, lock, acquire_time[2], release_time[2]);
+          use_lock(i, lock, acquire_time[3], release_time[3]);
+          use_lock(i, lock, acquire_time[4], release_time[4]);
+          use_lock(i, lock, acquire_time[5], release_time[5]);
+          use_lock(i, lock, acquire_time[6], release_time[6]);
+          use_lock(i, lock, acquire_time[7], release_time[7]);
+        }
+        int errors = check_data(acquire_time, release_time);
+        if (errors) {
+          debug_printf("ERRORS detected\n");
+        } else {
+          debug_printf("All ran ok\n");
+        }
       }
 
       hwlock_free(lock);
