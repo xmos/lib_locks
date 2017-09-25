@@ -12,3 +12,8 @@
 **/pdf/*
 **/html/*
 **/.settings/*
+
+# waf build files
+.lock-waf_*
+.waf-*/
+build/
