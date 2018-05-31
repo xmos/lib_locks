@@ -1,10 +1,10 @@
-DIRS	= lib_locks
+# This variable should contain a space separated list of all
+# the directories containing buildable applications (usually
+# prefixed with the app_ prefix)
+#
+# If the variable is set to "all" then all directories that start with app_
+# are built.
+BUILD_SUBDIRS = lib_locks
 
-all: $(DIRS)
-lib_locks: dummy
-	$(MAKE) -C lib_locks
-
-clean:
-	-for d in $(DIRS); do ($(MAKE) -C $$d clean); done
-
-dummy:
+XMOS_MAKE_PATH ?= ..
+include $(XMOS_MAKE_PATH)/xcommon/module_xcommon/build/Makefile.toplevel
