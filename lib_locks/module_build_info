@@ -9,5 +9,6 @@
 #
 # You can also set MODULE_XCC_C_FLAGS, MODULE_XCC_XC_FLAGS etc..
 
+LIBRARY = locks
+LIB_ARCH_locks = xs1b xs2a
 VERSION = 2.0.3
-
