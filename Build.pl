@@ -113,61 +113,27 @@ sub PrintUsage
 sub DoClean
 {
   chdir($LIB_LOCKS) or confess("Failed to change directory to $LIB_LOCKS");
-  XmosBuildLib::RunCommand("make -s clean");
+  XmosBuildLib::RunCommand("xmake clean");
   if ($? != 0) {
     die("Failed to clean liblocks");
   }
 }
 
-
 sub DoBuild
 {
   chdir($LIB_LOCKS) or confess("Failed to change directory to $LIB_LOCKS");
-  XmosBuildLib::RunCommand("make -s all");
+  XmosBuildLib::RunCommand("xmake all");
   if ($? != 0) {
     die("Failed to build liblocks");
   }
 }
 
-sub DoInstallCommonLib
-{
-  (my $arch) = @_;
-  XmosBuildLib::InstallXccLibrary($DOMAIN, "lib_locks/$arch", "liblocks.a", $arch);
-  XmosBuildLib::InstallReleaseFile($DOMAIN, "lib_locks/$arch", "liblocks.a", "target/lib/$arch");
-}
-
-my @found_files;
-my $found_file_base;
-
-sub FoundFile
-{
-  if (-f $File::Find::name) {
-    my $filename = $File::Find::name;
-    $filename = File::Spec->abs2rel($filename, $found_file_base);
-    push(@found_files, $filename);
-  }
-}
-
-sub GetFiles
-{
-  my $base = shift;
-  my $dir = shift;
-  my $includedir = $base;
-  if (defined($dir) && $dir ne "") {
-    $includedir = $includedir . $SLASH . $dir;
-  }
-  @found_files = ();
-  $found_file_base = abs_path("$DOMAIN${SLASH}$includedir") . $SLASH;
-  find(\&FoundFile, "$DOMAIN${SLASH}$includedir");
-  return @found_files;
-}
-
 sub DoInstall
 {
-
-  DoInstallCommonLib("xs2a");
-  XmosBuildLib::InstallReleaseFile($DOMAIN, "lib_locks/api", "hwlock.h", "target/include");
-  XmosBuildLib::InstallReleaseFile($DOMAIN, "lib_locks/api", "swlock.h", "target/include");
+  XmosBuildLib::InstallXccLibrary("$DOMAIN", "lib_locks${SLASH}lib${SLASH}xs2a", "liblocks.a", "xs2a");
+  XmosBuildLib::InstallXccLibrary("$DOMAIN", "lib_locks${SLASH}lib${SLASH}xs1b", "liblocks.a", "xs1b");
+  XmosBuildLib::InstallXccHeader($DOMAIN, "lib_locks${SLASH}api", "hwlock.h");
+  XmosBuildLib::InstallXccHeader($DOMAIN, "lib_locks${SLASH}api", "swlock.h");
 }
 
 main()
