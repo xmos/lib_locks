@@ -6,6 +6,7 @@
 #    make export - will build the library and export a binary version
 #                  of the module into the export/ directory
 
+LOCKS_AS_LIBRARY = 1
 XCC_FLAGS = -O2 -report
 
 XMOS_MAKE_PATH ?= ..
