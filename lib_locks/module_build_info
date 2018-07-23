@@ -9,11 +9,4 @@
 #
 # You can also set MODULE_XCC_C_FLAGS, MODULE_XCC_XC_FLAGS etc..
 
-export LOCKS_AS_LIBRARY
-
-ifeq ($(LOCKS_AS_LIBRARY),1)
-  LIBRARY = locks
-  LIB_ARCH_locks = xs1b xs2a
-endif #LOCKS_AS_LIBRARY
-
 VERSION = 2.0.3
