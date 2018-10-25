@@ -19,8 +19,8 @@ swlock_try_acquire:
     ldw r1, r0[0]            // Get the current mutex value.
     bt  r1, .Lfailed         // Check if it is already claimed.
     stw r11, r0[0]           // Claim it.
-#if defined(__XS2A__)
-    // On XS2 a high priority core needs to ensure that a low priority core
+#if defined(__XS2A__) || defined (__XS3A__)
+    // On XS2/XS3 a high priority core needs to ensure that a low priority core
     // has executed the store before we load
     nop
     nop
