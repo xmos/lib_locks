@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2016, XMOS Ltd, All rights reserved
+// Copyright (c) 2014-2016,2021, XMOS LIMITED. This Software is subject to the terms of the XMOS Public Licence: Version 1.
 
 // These functions are implemented in use_locks.c
 void init_locks(void);
