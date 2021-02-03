@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2016,2021, XMOS Ltd, All rights reserved
+// Copyright (c) 2014-2016, XMOS Ltd, All rights reserved
 
 #ifndef __swlock_h_
 #define __swlock_h_
