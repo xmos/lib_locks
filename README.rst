@@ -16,4 +16,5 @@ slower but you can use an unlimited number of them.
 Software version and dependencies
 .................................
 
-.. libdeps::
+The CHANGELOG contains information about the current and previous versions.
+For a list of direct dependencies, look for DEPENDENT_MODULES in lib_locks/module_build_info.
