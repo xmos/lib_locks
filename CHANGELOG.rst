@@ -1,6 +1,11 @@
 Locks library change log
 ========================
 
+2.1.1
+-----
+
+  * ADDED: Tests now run with xcore ai as well as xcore 200, also jenkins
+
 2.1.0
 -----
 
