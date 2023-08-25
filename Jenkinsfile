@@ -1,7 +1,9 @@
 @Library('xmos_jenkins_shared_library@v0.27.0') _
 
 pipeline {
-    agent none
+    agent {
+        label 'linux&&64'
+    }
 
     options {
         disableConcurrentBuilds()
@@ -18,41 +20,39 @@ pipeline {
     }
 
     stages {
-        stage("Do Jenkins") {
-            agent {
-                label 'linux&&64'
-            }
-            stages {
-                stage ("Do Jenkins") {
-                    steps {
-                        withTools(params.TOOLS_VERSION){ 
-                            sh "mkdir -p my-sandbox/lib_locks"
-                            dir("my-sandbox/lib_locks") {
-                                // clone 
-                                checkout scm
+        stage ("Do Jenkins") {
+            steps {
+                withTools(params.TOOLS_VERSION){ 
+                    dir("my-sandbox/lib_locks") {
+                        // clone 
+                        checkout scm
 
-                                // build examples
-                                dir("examples/locks_lib_example") {
-                                    sh "./build-all-targets"
-                                    archiveArtifacts artifacts: "**/*.xe"
-                                }
+                        // build examples
+                        dir("examples/locks_lib_example") {
+                            sh "xmake"
+                            archiveArtifacts artifacts: "**/*.xe"
+                        }
 
-                                // run tests
-                                createVenv('requirements.txt')
-                                withVenv {
-                                    sh "pip install -r requirements.txt"
-                                    dir("tests") {
-                                        catchError {
-                                            sh "python -m pytest --junitxml=results.xml -rA -v --durations=0 -o junit_logging=all"
-                                        }
-                                        junit "results.xml"
-                                    }
+                        // run tests
+                        createVenv('requirements.txt')
+                        withVenv {
+                            sh "pip install -r requirements.txt"
+                            dir("tests") {
+                                catchError {
+                                    sh "python -m pytest --junitxml=results.xml -rA -v --durations=0 -o junit_logging=all"
                                 }
+                                archiveArtifacts artifacts: "results.xml"
+                                junit "results.xml"
                             }
                         }
                     }
                 }
             }
+        }
+    }
+    post {
+        cleanup {
+            cleanWs()
         }
     }
 }
