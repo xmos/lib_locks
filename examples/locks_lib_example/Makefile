@@ -1,12 +1,12 @@
 # The TARGET variable determines what target system the application is
 # compiled for. It either refers to an XN file in the source directories
 # or a valid argument for the --target option when compiling
-TARGET = XK-1A
+TARGET ?= XK-1A
 
 # The APP_NAME variable determines the name of the final .xe file. It should
 # not include the .xe postfix. If left blank the name will default to
 # the project name
-APP_NAME = locks_lib_example
+APP_NAME = locks_lib_example_$(TARGET)
 
 # The USED_MODULES variable lists other module used by the application.
 USED_MODULES = lib_locks

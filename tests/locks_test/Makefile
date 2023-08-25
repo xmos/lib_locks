@@ -2,14 +2,14 @@
 # compiled for. It either refers to an XN file in the source directories
 # or a valid argument for the --target option when compiling.
 
-TARGET = XCORE-200-EXPLORER
+TARGET ?= XCORE-AI-EXPLORER
 #TARGET = SLICEKIT-L16
 
 # The APP_NAME variable determines the name of the final .xe file. It should
 # not include the .xe postfix. If left blank the name will default to
 # the project name
 
-APP_NAME = 
+APP_NAME = $(TARGET)
 
 # The flags passed to xcc when building the application
 # You can also set the following to override flags for a particular language:
@@ -27,7 +27,7 @@ XCC_FLAGS_SW = $(GEN_XCC_FLAGS) -DUSE_HW_LOCK=0
 
 # The USED_MODULES variable lists other module used by the application.
 
-USED_MODULES = lib_logging lib_locks
+USED_MODULES = lib_locks
 
 #=============================================================================
 # The following part of the Makefile includes the common build infrastructure

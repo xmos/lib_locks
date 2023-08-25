@@ -17,3 +17,5 @@
 .lock-waf_*
 .waf-*/
 build/
+__pycache__/
+.python-version

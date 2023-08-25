@@ -3,7 +3,7 @@
 #include <xs1.h>
 #include <platform.h>
 
-#include "debug_print.h"
+#include <stdio.h>
 #include "hwlock.h"
 #include "swlock.h"
 
@@ -100,9 +100,9 @@ int main() {
         }
         int errors = check_data(acquire_time, release_time);
         if (errors) {
-          debug_printf("ERRORS detected\n");
+          printf("ERRORS detected\n");
         } else {
-          debug_printf("All ran ok\n");
+          printf("All ran ok\n");
         }
       }
 
