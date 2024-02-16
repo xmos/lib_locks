@@ -1,8 +1,8 @@
 Locks library change log
 ========================
 
-UNRELEASED
-----------
+2.2.0
+-----
 
   * ADDED: Tests now run on xcore.ai as well as xcore-200
   * ADDED: Support for XCommon CMake build system
