@@ -3,7 +3,14 @@
 
 #ifndef __swlock_h_
 #define __swlock_h_
-#include <xccompat.h>
+
+#ifndef REFERENCE_PARAM
+#ifdef __XC__
+#define REFERENCE_PARAM(type, name) type &name
+#else
+#define REFERENCE_PARAM(type, name) type *name
+#endif
+#endif
 
 /** Type that represents a software lock */
 typedef unsigned swlock_t;
