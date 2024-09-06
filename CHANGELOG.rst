@@ -1,6 +1,11 @@
 Locks library change log
 ========================
 
+UNRELEASED
+==========
+
+  * ADDED: XCommon CMake support in examples
+
 2.2.0
 -----
 
