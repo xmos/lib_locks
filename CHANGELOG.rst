@@ -1,6 +1,11 @@
 Locks library change log
 ========================
 
+UNRELEASED
+==========
+
+  * CHANGED: Build using XCommon CMake instead of xcommon
+
 2.2.0
 -----
 
