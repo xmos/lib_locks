@@ -14,22 +14,23 @@ pipeline {
     parameters {
         string(
             name: 'TOOLS_VERSION',
-            defaultValue: '15.2.1',
+            defaultValue: '15.3.0',
             description: 'The XTC tools version'
         )
     }
 
     stages {
-        stage ("Do Jenkins") {
+        stage ("Build and Test") {
             steps {
                 withTools(params.TOOLS_VERSION){ 
-                    dir("my-sandbox/lib_locks") {
+                    dir("lib_locks") {
                         // clone 
                         checkout scm
 
                         // build examples
-                        dir("examples/locks_lib_example") {
-                            sh "xmake"
+                        dir("examples") {
+                            sh "cmake -B build -G \"Unix Makefiles\""
+                            sh "xmake -C build"
                             archiveArtifacts artifacts: "**/*.xe"
                         }
 
