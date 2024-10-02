@@ -1,10 +1,13 @@
-@Library('xmos_jenkins_shared_library@v0.27.0') _
+@Library('xmos_jenkins_shared_library@v0.34.0') _
 
 pipeline {
     agent {
         label 'linux&&64'
     }
 
+    environment {
+        REPO = "lib_locks"
+    }
     options {
         disableConcurrentBuilds()
         skipDefaultCheckout()
@@ -23,7 +26,7 @@ pipeline {
         stage ("Build and Test") {
             steps {
                 withTools(params.TOOLS_VERSION){ 
-                    dir("lib_locks") {
+                    dir("${REPO}") {
                         // clone 
                         checkout scm
 
@@ -48,6 +51,7 @@ pipeline {
                         }
                     }
                 }
+                runLibraryChecks("${WORKSPACE}/${REPO}", "v2.0.1")
             }
         }
     }

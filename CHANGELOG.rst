@@ -1,5 +1,5 @@
-Locks library change log
-========================
+lib_locks change log
+====================
 
 UNRELEASED
 ==========
