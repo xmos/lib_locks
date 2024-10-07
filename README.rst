@@ -5,7 +5,7 @@ lib_locks: Lock handling Library
 ################################
 
 :vendor: XMOS
-:version: 2.2.1
+:version: 2.3.0
 :scope: General Use
 :description: Lock handling library
 :category: General Purpose
