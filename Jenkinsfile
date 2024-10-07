@@ -2,7 +2,7 @@
 
 pipeline {
     agent {
-        label 'linux&&64'
+        label 'documentation && linux && 64'
     }
 
     environment {
@@ -20,14 +20,19 @@ pipeline {
             defaultValue: '15.3.0',
             description: 'The XTC tools version'
         )
+        string(
+            name: 'XMOSDOC_VERSION',
+            defaultValue: 'v6.1.0',
+            description: 'The xmosdoc version'
+        )
     }
 
     stages {
         stage ("Build and Test") {
             steps {
-                withTools(params.TOOLS_VERSION){ 
+                withTools(params.TOOLS_VERSION){
                     dir("${REPO}") {
-                        // clone 
+                        // clone
                         checkout scm
 
                         // build examples
@@ -54,6 +59,15 @@ pipeline {
                 runLibraryChecks("${WORKSPACE}/${REPO}", "v2.0.1")
             }
         }
+        stage('Build Documentation') {
+          steps {
+            dir("${REPO}") {
+              warnError("Docs") {
+                buildDocs()
+              }
+            } // dir("${REPO}")
+          } // steps
+        } // stage('Build Documentation')
     }
     post {
         cleanup {
