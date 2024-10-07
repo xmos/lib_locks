@@ -1,8 +1,8 @@
 lib_locks change log
 ====================
 
-UNRELEASED
-==========
+2.2.1
+-----
 
   * CHANGED: Build using XCommon CMake instead of xcommon
 
