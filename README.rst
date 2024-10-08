@@ -1,7 +1,7 @@
 :orphan:
 
 ################################
-lib_locks: Lock handling Library
+lib_locks: Lock Handling Library
 ################################
 
 :vendor: XMOS
