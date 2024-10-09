@@ -1,5 +1,10 @@
-Locks library change log
-========================
+lib_locks change log
+====================
+
+2.3.0
+-----
+
+  * CHANGED: Build using XCommon CMake instead of xcommon
 
 2.2.0
 -----

@@ -1,10 +1,13 @@
-@Library('xmos_jenkins_shared_library@v0.27.0') _
+@Library('xmos_jenkins_shared_library@v0.34.0') _
 
 pipeline {
     agent {
-        label 'linux&&64'
+        label 'documentation && linux && 64'
     }
 
+    environment {
+        REPO = "lib_locks"
+    }
     options {
         disableConcurrentBuilds()
         skipDefaultCheckout()
@@ -14,22 +17,28 @@ pipeline {
     parameters {
         string(
             name: 'TOOLS_VERSION',
-            defaultValue: '15.2.1',
+            defaultValue: '15.3.0',
             description: 'The XTC tools version'
+        )
+        string(
+            name: 'XMOSDOC_VERSION',
+            defaultValue: 'v6.1.0',
+            description: 'The xmosdoc version'
         )
     }
 
     stages {
-        stage ("Do Jenkins") {
+        stage ("Build and Test") {
             steps {
-                withTools(params.TOOLS_VERSION){ 
-                    dir("my-sandbox/lib_locks") {
-                        // clone 
+                withTools(params.TOOLS_VERSION){
+                    dir("${REPO}") {
+                        // clone
                         checkout scm
 
                         // build examples
-                        dir("examples/locks_lib_example") {
-                            sh "xmake"
+                        dir("examples") {
+                            sh "cmake -B build -G \"Unix Makefiles\""
+                            sh "xmake -C build"
                             archiveArtifacts artifacts: "**/*.xe"
                         }
 
@@ -47,8 +56,18 @@ pipeline {
                         }
                     }
                 }
+                runLibraryChecks("${WORKSPACE}/${REPO}", "v2.0.1")
             }
         }
+        stage('Build Documentation') {
+          steps {
+            dir("${REPO}") {
+              warnError("Docs") {
+                buildDocs()
+              }
+            } // dir("${REPO}")
+          } // steps
+        } // stage('Build Documentation')
     }
     post {
         cleanup {
