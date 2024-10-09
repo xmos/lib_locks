@@ -28,8 +28,13 @@ enum {
 inline hwlock_t hwlock_alloc(void)
 {
   hwlock_t lock;
+#ifdef __riscv_xxcore
+  asm volatile ("xm.getr %0, " QUOTE(XS1_RES_TYPE_LOCK)
+                    : "=x" (lock));
+#else
   asm volatile ("getr %0, " QUOTE(XS1_RES_TYPE_LOCK)
                     : "=r" (lock));
+#endif
   return lock;
 }
 
@@ -43,9 +48,15 @@ inline hwlock_t hwlock_alloc(void)
  */
 inline void hwlock_free(hwlock_t lock)
 {
+#ifdef __riscv_xxcore
+  asm volatile ("xm.freer %0"
+                        : /* no output */
+                        : "x" (lock));
+#else
   asm volatile ("freer res[%0]"
                         : /* no output */
                         : "r" (lock));
+#endif
 }
 
 /** Acquire a hardware lock.
@@ -58,10 +69,17 @@ inline void hwlock_free(hwlock_t lock)
  */
 inline void hwlock_acquire(hwlock_t lock)
 {
+#ifdef __riscv_xxcore
+  asm volatile ("xm.in %0, %0"
+                        : /* no output */
+                        : "x" (lock)
+                        : "memory");
+#else
   asm volatile ("in %0, res[%0]"
                         : /* no output */
                         : "r" (lock)
                         : "memory");
+#endif
 }
 
 /** Release a hardware lock.
@@ -73,10 +91,17 @@ inline void hwlock_acquire(hwlock_t lock)
  */
 inline void hwlock_release(hwlock_t lock)
 {
+#ifdef __riscv_xxcore
+  asm volatile ("xm.out %0, %0"
+                        : /* no output */
+                        : "x" (lock)
+                        : "memory");
+#else
   asm volatile ("out res[%0], %0"
                         : /* no output */
                         : "r" (lock)
                         : "memory");
+#endif
 }
 
 #endif // __hwlock_h_
