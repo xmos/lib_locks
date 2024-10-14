@@ -2,17 +2,15 @@
 
 pipeline {
     agent {
-        label 'documentation && linux && 64'
+        label 'x86_64 && linux'
     }
-
     environment {
         REPO = "lib_locks"
     }
     options {
-        disableConcurrentBuilds()
+        buildDiscarder(xmosDiscardBuildSettings())
         skipDefaultCheckout()
         timestamps()
-        buildDiscarder(xmosDiscardBuildSettings(onlyArtifacts=false))
     }
     parameters {
         string(
@@ -25,53 +23,66 @@ pipeline {
             defaultValue: 'v6.1.2',
             description: 'The xmosdoc version'
         )
+        string(
+            name: 'INFR_APPS_VERSION',
+            defaultValue: 'v2.0.1',
+            description: 'The infr_apps version'
+        )
     }
 
     stages {
-        stage ("Build and Test") {
+        stage ("Build examples") {
             steps {
-                withTools(params.TOOLS_VERSION){
-                    dir("${REPO}") {
-                        // clone
-                        checkout scm
+                dir("${REPO}") {
+                    checkout scm
 
-                        // build examples
-                        dir("examples") {
+                    dir("examples") {
+                        withTools(params.TOOLS_VERSION){
                             sh "cmake -B build -G \"Unix Makefiles\""
-                            sh "xmake -C build"
-                            archiveArtifacts artifacts: "**/*.xe"
-                        }
-
-                        // run tests
-                        createVenv('requirements.txt')
-                        withVenv {
-                            sh "pip install -r requirements.txt"
-                            dir("tests") {
-                                catchError {
-                                    sh "python -m pytest --junitxml=results.xml -rA -v --durations=0 -o junit_logging=all"
-                                }
-                                archiveArtifacts artifacts: "results.xml"
-                                junit "results.xml"
-                            }
+                            sh "xmake -C build -j"
                         }
                     }
                 }
-                runLibraryChecks("${WORKSPACE}/${REPO}", "v2.0.1")
+            }
+        } // Build examples
+
+        stage('Library checks') {
+            steps {
+                runLibraryChecks("${WORKSPACE}/${REPO}", "${params.INFR_APPS_VERSION}")
             }
         }
-        stage('Build Documentation') {
+
+        stage('Documentation') {
           steps {
             dir("${REPO}") {
               warnError("Docs") {
                 buildDocs()
               }
-            } // dir("${REPO}")
-          } // steps
-        } // stage('Build Documentation')
-    }
+            }
+          }
+        }
+
+        stage ("Tests") {
+            steps {
+                withTools(params.TOOLS_VERSION) {
+                    dir("${REPO}/tests") {
+                        createVenv(reqFile: 'requirements.txt')
+                        withVenv {
+                            catchError {
+                                sh "python -m pytest --junitxml=results.xml -rA -v --durations=0 -o junit_logging=all"
+                            }
+                            archiveArtifacts artifacts: "results.xml"
+                            junit "results.xml"
+                        }
+                    }
+                }
+            }
+        } // Tests
+    } // stages
+
     post {
         cleanup {
-            cleanWs()
+            xcoreCleanSandbox()
         }
     }
 }

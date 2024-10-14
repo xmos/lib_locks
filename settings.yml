@@ -2,19 +2,19 @@
 lib_name: lib_locks
 project: '{{lib_name}}'
 title: '{{lib_name}}: Lock handling library'
-version: 2.3.0
+version: 2.3.1
 
 documentation:
   exclude_patterns_path: doc/exclude_patterns.inc
   substitutions_path: doc/substitutions.inc
-  root_doc: doc/rst/locks.rst
+  root_doc: doc/rst/lib_locks.rst
   linkcheck_ignore_regex: ['']
   cognidox_part_number: XM-006390-UG
   doxygen_projects:
     lib_locks:
       doxyfile_path: doc/Doxyfile.inc
   pdfs:
-    doc/rst/locks.rst:
+    doc/rst/lib_locks.rst:
       pdf_title: '{{title}}'
       pdf_filename: '{{lib_name}}_v{{version}}'
     README.rst:

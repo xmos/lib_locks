@@ -2,4 +2,4 @@ cmake_minimum_required(VERSION 3.21)
 include($ENV{XMOS_CMAKE_PATH}/xcommon.cmake)
 project(lib_locks_examples)
 
-add_subdirectory(locks_lib_example)
+add_subdirectory(app_locks_example)

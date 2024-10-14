@@ -1,6 +1,11 @@
 lib_locks change log
 ====================
 
+2.3.1
+-----
+
+  * CHANGED: Documentation updates
+
 2.3.0
 -----
 
