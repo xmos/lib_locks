@@ -1,7 +1,6 @@
-// Copyright 2014-2024 XMOS LIMITED.
+// Copyright 2014-2025 XMOS LIMITED.
 // This Software is subject to the terms of the XMOS Public Licence: Version 1.
-#include "hwlock.h"
-#include "swlock.h"
+#include "locks.h"
 #include <stdio.h>
 
 int a[5];

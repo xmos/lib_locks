@@ -2,5 +2,5 @@
 examples
 tests
 .pytest_cache
-CHANGELOG.rst
-LICENSE.rst
+**CHANGELOG**
+**LICENSE**

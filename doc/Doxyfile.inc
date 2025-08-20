@@ -1,7 +1,7 @@
 # This file provides overrides to the Doxyfile configuration
 
 PROJECT_NAME           = lib_locks
-PROJECT_BRIEF          = "Lock handling library"
+PROJECT_BRIEF          = "Locks for concurrency"
 
 INPUT                  = ../lib_locks/api ../lib_locks/src
 

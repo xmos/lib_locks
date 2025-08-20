@@ -1,8 +1,8 @@
-// Copyright 2014-2021 XMOS LIMITED.
+// Copyright 2014-2025 XMOS LIMITED.
 // This Software is subject to the terms of the XMOS Public Licence: Version 1.
 
-#ifndef __swlock_h_
-#define __swlock_h_
+#ifndef SWLOCK_H_
+#define SWLOCK_H_
 #include <xccompat.h>
 
 /** Type that represents a software lock */
@@ -64,4 +64,4 @@ void swlock_acquire(REFERENCE_PARAM(swlock_t, lock));
  */
 void swlock_release(REFERENCE_PARAM(swlock_t, lock));
 
-#endif // __swlock_h_
+#endif // SWLOCK_H_
