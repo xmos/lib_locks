@@ -1,58 +1,65 @@
 :orphan:
 
 ################################
-lib_locks: Lock handling library
+lib_locks: Locks for concurrency
 ################################
 
 :vendor: XMOS
-:version: 2.3.1
+:version: 2.3.2
 :scope: General Use
-:description: Lock handling library
+:description: Access to hardware and software locks for concurrent C programs
 :category: General Purpose
-:keywords: hardware locks, software locks, locks
+:keywords: locks
 :devices: xcore.ai, xcore-200
 
-********
-Overview
-********
+*******
+Summary
+*******
 
-This library provides access to hardware and software locks for use in concurrent C programs. In
-general it is not safe to use these to marshall within XC due to the assumptions XC makes about
-safe concurrent data access.
+This library provides access to hardware and software locks for use in concurrent C programs.
+However, it is generally not safe to use these for marshaling within XC, due to the assumptions
+XC makes about safe concurrent data access.
 
 ********
 Features
 ********
 
-  * Hardware locks: fast and power efficient but there are a limited number per tile
-  * Software locks: slower but an unlimited number can be used
+* Hardware locks: fast and power efficient but there are a limited number per tile
+* Software locks: slower but an unlimited number can be used
 
 ************
-Known Issues
+Known issues
 ************
 
-  * None
+* None
+
+****************
+Development repo
+****************
+
+* `lib_locks <https://www.github.com/xmos/lib_locks>`_
 
 **************
-Required Tools
+Required tools
 **************
 
-  * XMOS XTC Tools: 15.3.0
+* XMOS XTC Tools: 15.3.1
 
 *********************************
-Required Libraries (dependencies)
+Required libraries (dependencies)
 *********************************
 
-  * None
+* None
 
 *************************
-Related Application Notes
+Related application notes
 *************************
 
-  * None
+* None
 
 *******
 Support
 *******
 
-This package is supported by XMOS Ltd. Issues can be raised against the software at www.xmos.com/support
+This package is supported by XMOS Ltd. Issues can be raised against the software at
+`www.xmos.com/support <https://www.xmos.com/support>`_

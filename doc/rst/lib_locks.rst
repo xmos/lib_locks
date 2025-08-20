@@ -1,5 +1,5 @@
 ################################
-lib_locks: Lock handling library
+lib_locks: Locks for concurrency
 ################################
 
 ************

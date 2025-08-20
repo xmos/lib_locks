@@ -1,6 +1,12 @@
 lib_locks change log
 ====================
 
+2.3.2
+-----
+
+  * ADDED:     locks.h which includes all lock functions
+  * CHANGED:   Minor documentaiton updates
+
 2.3.1
 -----
 

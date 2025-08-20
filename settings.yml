@@ -1,8 +1,9 @@
+# This file relates to internal XMOS infrastructure and should be ignored by external users
 ---
 lib_name: lib_locks
 project: '{{lib_name}}'
-title: '{{lib_name}}: Lock handling library'
-version: 2.3.1
+title: '{{lib_name}}: Locks for concurrency'
+version: 2.3.2
 
 documentation:
   exclude_patterns_path: doc/exclude_patterns.inc
