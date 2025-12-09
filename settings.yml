@@ -3,7 +3,7 @@
 lib_name: lib_locks
 project: '{{lib_name}}'
 title: '{{lib_name}}: Locks for concurrency'
-version: 2.3.2
+version: 2.4.0
 
 documentation:
   exclude_patterns_path: doc/exclude_patterns.inc

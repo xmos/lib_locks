@@ -10,8 +10,13 @@ This library provides access to hardware and software locks for use in concurren
 general it is not safe to use these to marshall within XC due to the assumptions XC makes about
 safe concurrent data access.
 
-Two types of locks are provided. Hardware locks are fast and power efficient but there are a
+Three types of locks are provided. The first two support locking in the local tile scope only.
+Hardware locks are fast and power efficient but there are a
 limited number per tile. Software locks are slower but you can use an unlimited number of them.
+
+In addition a single Tile lock is available on ``xcore.ai`` devices. This uses a shared peripheral
+register on the chip and is suitable for protecting resources shared across tiles. It is slower
+than a software lock and so should only be used for chip-wide locking requirements.
 
 ``lib_locks`` is intended to be used with the `XCommon CMake <https://www.xmos.com/file/xcommon-cmake-documentation/?version=latest>`_
 , the `XMOS` application build and dependency management system.
@@ -23,7 +28,7 @@ Basic use
 Declaration & allocation
 ========================
 
-Before using a lock it first must be declared.
+Before using a software or hardware lock, it must first be declared.
 
 Software based locks should be initialised to a specific value::
 
@@ -37,6 +42,8 @@ Hardware locks relate to a physical resource in the device and so need to be pro
 
 Locks are typically used to protect critical sections of code when multiple threads are involved,
 so they are often declared globally for shared access.
+
+Tile locks used a fixed resource on-chip and therefore do not require initialisation.
 
 Acquisition and release
 =======================
@@ -58,6 +65,14 @@ Similarly, for hardware based locks::
 
     hwlock_release(&hwlock);
 
+The tile based lock takes no arguments and only one per chip is available::
+
+    intertile_lock_acquire();
+
+    // Perform critical code section..
+
+    intertile_lock_release();
+
 In all cases these are blocking calls.
 
 Freeing
@@ -67,6 +82,8 @@ Once an application no longer requires a hardware lock it should be freed to all
 hardware resource to be reused::
 
     hwlock_free(hwlock);
+
+Software and Tile locks do not need to be freed.
 
 *******************
 Example application
@@ -105,4 +122,10 @@ Software lock API
 .. doxygenfunction:: swlock_acquire
 .. doxygenfunction:: swlock_release
 
+*************
+Tile lock API
+*************
+
+.. doxygenfunction:: intertile_lock_acquire
+.. doxygenfunction:: intertile_lock_release
 

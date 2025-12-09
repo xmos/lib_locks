@@ -5,11 +5,11 @@ lib_locks: Locks for concurrency
 ################################
 
 :vendor: XMOS
-:version: 2.3.2
+:version: 2.4.0
 :scope: General Use
 :description: Access to hardware and software locks for concurrent C programs
 :category: General Purpose
-:keywords: locks
+:keywords: Utility
 :devices: xcore.ai, xcore-200
 
 *******
@@ -26,12 +26,13 @@ Features
 
 * Hardware locks: fast and power efficient but there are a limited number per tile
 * Software locks: slower but an unlimited number can be used
+* Tile lock: single lock available for guarding chip-wide access to resources
 
 ************
 Known issues
 ************
 
-* None
+* Tile lock uses a MIPI register and so cannot be used when MIPI is enabled
 
 ****************
 Development repo

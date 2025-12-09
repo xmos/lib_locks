@@ -1,13 +1,12 @@
-
 // Copyright 2025 XMOS LIMITED.
 // This Software is subject to the terms of the XMOS Public Licence: Version 1.
 
 #ifdef  __XS3A__
 
-#include "tilelock.h"
+#include "intertilelock.h"
 
 
-void tilelock_release(void){
+void intertile_lock_release(void){
     unsigned tileid = get_local_tile_id();
     int ret = 0;
     while(!ret){
@@ -16,15 +15,9 @@ void tilelock_release(void){
 }
 
 
-void tilelock_init(void)
-{
-    tilelock_release();
-}
-
-
 // polling delay which does not require a timer (C friendly)
 static void timerless_delay(unsigned delay_ticks){
-    timer t;
+    timer t; // This does not allocate a timer because we only read so uses gettime
     int time_now;
     int time_trigger;
     t :> time_trigger;
@@ -36,20 +29,20 @@ static void timerless_delay(unsigned delay_ticks){
 
 
 // Prototype for the ASM function in tile_lock_asm.S
-extern int tilelock_try_acquire(unsigned tileid, unsigned combined_id);
+extern unsigned intertile_lock_try_acquire(unsigned tileid, unsigned combined_id);
 
 
-void tilelock_acquire(void)
+void intertile_lock_acquire(void)
 {
     const unsigned tileid = get_local_tile_id();
     const unsigned combined_id = tileid | (get_logical_core_id() << 4);
-    unsigned readback_combined_id = tilelock_try_acquire(tileid, combined_id);
-    const unsigned backoff_multiplier = 400; // Tested for maximum speed with multiple clients (see tile_lock_test_xs3)
+    unsigned readback_combined_id = intertile_lock_try_acquire(tileid, combined_id);
+    const unsigned backoff_multiplier = 2000; // Tested for maximum speed with multiple clients (see tile_lock_test_xs3)
 
     while(readback_combined_id != combined_id){
-        // If too low, we get more collisions/retries and so microseconds is optimal
+        // If too low, we get more collisions/retries and so a larger backoff is more optimal
         timerless_delay(backoff_multiplier * (combined_id & 0xff));
-        readback_combined_id = tilelock_try_acquire(tileid, combined_id);
+        readback_combined_id = intertile_lock_try_acquire(tileid, combined_id);
     }
 }
 

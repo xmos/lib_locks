@@ -6,6 +6,6 @@
 
 #include "swlock.h"
 #include "hwlock.h"
-#include "tilelock.h"
+#include "intertile_lock.h"
 
 #endif
