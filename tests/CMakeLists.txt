@@ -4,3 +4,4 @@ project(lib_locks_tests)
 
 add_subdirectory(locks_test_xs2)
 add_subdirectory(locks_test_xs3)
+add_subdirectory(tile_lock_test_xs3)
