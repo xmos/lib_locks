@@ -14,9 +14,11 @@ Three types of locks are provided. The first two support locking in the local ti
 Hardware locks are fast and power efficient but there are a
 limited number per tile. Software locks are slower but you can use an unlimited number of them.
 
-In addition a single Tile lock is available on ``xcore.ai`` devices. This uses a shared peripheral
-register on the chip and is suitable for protecting resources shared across tiles. It is slower
-than a software lock and so should only be used for chip-wide locking requirements.
+In addition a single Intertile lock is available on ``xcore.ai`` devices only. This uses a shared peripheral
+register on the ``xcore.ai`` device and is suitable for protecting resources shared across tiles.
+
+Examples include access to ``xcore.ai`` peripherals or locking printing from both tiles. It is slower
+than a software lock and so should only be used for device-wide locking requirements.
 
 ``lib_locks`` is intended to be used with the `XCommon CMake <https://www.xmos.com/file/xcommon-cmake-documentation/?version=latest>`_
 , the `XMOS` application build and dependency management system.
@@ -43,7 +45,10 @@ Hardware locks relate to a physical resource in the device and so need to be pro
 Locks are typically used to protect critical sections of code when multiple threads are involved,
 so they are often declared globally for shared access.
 
-Tile locks used a fixed resource on-chip and therefore do not require initialisation.
+The Intertile lock uses a fixed peripheral register which is initialised on power up and therefore does not require initialisation before use.
+
+.. warning::
+    The Intertile lock uses a MIPI D-PHY register and so cannot be used at the same time as the MIPI D-PHY peripheral.
 
 Acquisition and release
 =======================
@@ -65,7 +70,7 @@ Similarly, for hardware based locks::
 
     hwlock_release(&hwlock);
 
-The tile based lock takes no arguments and only one per chip is available::
+The Intertile lock takes no arguments and only one lock per xcore.ai is available::
 
     intertile_lock_acquire();
 
@@ -83,7 +88,7 @@ hardware resource to be reused::
 
     hwlock_free(hwlock);
 
-Software and Tile locks do not need to be freed.
+Software and Intertile locks do not need to be freed.
 
 *******************
 Example application
@@ -122,9 +127,9 @@ Software lock API
 .. doxygenfunction:: swlock_acquire
 .. doxygenfunction:: swlock_release
 
-*************
-Tile lock API
-*************
+******************
+Intertile lock API
+******************
 
 .. doxygenfunction:: intertile_lock_acquire
 .. doxygenfunction:: intertile_lock_release

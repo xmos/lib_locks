@@ -7,7 +7,7 @@ from subprocess import run
 from pathlib import Path
 import pytest
 
-def test_tile_locks():
+def test_intertile_lock():
     cwd = Path(__file__). parent / "build"
     xe_path = (
         Path(__file__).parent

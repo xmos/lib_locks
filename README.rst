@@ -26,13 +26,15 @@ Features
 
 * Hardware locks: fast and power efficient but there are a limited number per tile
 * Software locks: slower but an unlimited number can be used
-* Tile lock: single lock available for guarding chip-wide access to resources
+* Intertile lock (xcore.ai only): single lock available for guarding chip-wide access to resources
 
 ************
 Known issues
 ************
 
-* Tile lock uses a MIPI register and so cannot be used when MIPI is enabled
+* Intertile lock uses a MIPI D-PHY register and so cannot be used when MIPI D-PHY is enabled
+* Intertile lock requires that both tiles are running at the same core frequency.
+  Clocking down one tile may very rarely result in unreliable locking.
 
 ****************
 Development repo

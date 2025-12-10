@@ -8,8 +8,12 @@
 #include <xs3a_defines.h>
 #include <xs1.h>
 
-#define LOCK_REG        XS1_SSWITCH_MIPI_CLK_DIVIDER_NUM
-#define LOCK_REG_INIT   0x10000 // Default val of reg on boot
+#ifndef INTERTILE_LOCK_REG
+#define INTERTILE_LOCK_REG        XS1_SSWITCH_MIPI_CLK_DIVIDER_NUM
+#endif
+#ifndef INTERTILE_LOCK_REG_INIT
+#define INTERTILE_LOCK_REG_INIT   0x10000 // Default val of reg on boot
+#endif
 
 #ifndef __ASSEMBLER__
 

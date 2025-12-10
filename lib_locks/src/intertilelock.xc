@@ -10,7 +10,7 @@ void intertile_lock_release(void){
     unsigned tileid = get_local_tile_id();
     int ret = 0;
     while(!ret){
-        ret = write_sswitch_reg(tileid, LOCK_REG, LOCK_REG_INIT);
+        ret = write_sswitch_reg(tileid, INTERTILE_LOCK_REG, INTERTILE_LOCK_REG_INIT);
     }
 }
 

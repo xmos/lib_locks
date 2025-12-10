@@ -74,7 +74,7 @@ unsigned tile_report(){
         for(int i = 0; i < NUM_THREADS; i++){
             total_thread_counters += thread_counters_ptr[i];
         }
-        printf("Counter tile 0x%x: expected %u (actual %u): %s\n",
+        printf("Counter tile[%d]: expected %u (actual %u): %s\n",
             get_local_tile_id() == get_tile_id(tile[0]) ? 0 : 1,
             total_thread_counters, 
             *tile_counter_ptr,

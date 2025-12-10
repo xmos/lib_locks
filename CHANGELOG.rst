@@ -4,7 +4,7 @@ lib_locks change log
 2.4.0
 -----
 
-  * ADDED:     Tile based lock API (xcore.ai only)
+  * ADDED:     Intertile lock API (xcore.ai only)
 
 2.3.2
 -----

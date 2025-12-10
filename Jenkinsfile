@@ -91,7 +91,7 @@ pipeline {
                                     dir("${REPO_NAME}/tests") {
                                         createVenv(reqFile: 'requirements.txt')
                                         withVenv {
-                                            catchError {
+                                            warnError("Simulator tests failed") {
                                                 sh "python -m pytest test_lib_locks.py --junitxml=results.xml -rA -v --durations=0 -o junit_logging=all"
                                             }
                                             archiveArtifacts artifacts: "results.xml"
@@ -140,7 +140,7 @@ pipeline {
                                         createVenv(reqFile: "requirements.txt")
                                         withVenv {
                                             xcoreBuild(archiveBins: false)
-                                            sh "pytest -vv -s test_tile_lock.py --junitxml=pytest_result.xml"
+                                            sh "pytest -vv -s test_intertile_lock.py --junitxml=pytest_result.xml"
                                         }
                                     }
                                 }

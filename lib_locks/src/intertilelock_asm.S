@@ -47,7 +47,7 @@ intertile_lock_try_acquire_start_read:
     // send reply chanend masked resid    
     // we would normally OR with reg >> 8 but we know reg < 256 so no need
     out res[r11], r2 // chan resid & 0xffffff00
-    ldc r3, LOCK_REG
+    ldc r3, INTERTILE_LOCK_REG
     // send regnum
     outt res[r11], r3
     outct res[r11], XS1_CT_END
@@ -70,7 +70,7 @@ intertile_lock_try_acquire_write:
     ldc r3, XS1_CT_WRITEC // Too big for outct immediate
     outct res[r11], r3
     out res[r11], r2 // chan resid & 0xffffff00
-    ldc r3, LOCK_REG
+    ldc r3, INTERTILE_LOCK_REG
     // send regnum
     outt res[r11], r3
     // send set val
@@ -82,6 +82,15 @@ intertile_lock_try_acquire_write:
     // Restart write if no ACK
     {chkct res[r11], XS1_CT_END;    bf r0, intertile_lock_try_acquire_write}
 
+intertile_lock_wait_for_readback:
+    // A high priority core (or a tile with <= 5 threads) needs to ensure that
+    // other cores have executed the store before we readback 
+    nop
+    nop
+    nop
+    nop
+    nop
+
 // This guards against a race condition when two acquires happen at the same time
 intertile_lock_try_acquire_start_read_back:
     ldc r3, XS1_CT_READC;
@@ -89,7 +98,7 @@ intertile_lock_try_acquire_start_read_back:
     // send reply chanend masked resid    
     // we would normally OR with reg >> 8 but we know reg < 256 so no need
     out res[r11], r2 // chan resid & 0xffffff00
-    ldc r3, LOCK_REG
+    ldc r3, INTERTILE_LOCK_REG
     // send regnum
     outt res[r11], r3
     outct res[r11], XS1_CT_END
