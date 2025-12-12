@@ -1,6 +1,11 @@
 lib_locks change log
 ====================
 
+2.4.0
+-----
+
+  * ADDED:     Intertile lock API (xcore.ai only)
+
 2.3.2
 -----
 
